@@ -31,4 +31,8 @@ module(
     version = "1.7.0",
 )
 
+dist = use_extension("//extensions:dist.bzl", "dist")
+use_repo(dist, "shtk_hub")
+register_toolchains("@shtk_hub//:toolchain")
+
 bazel_dep(name = "bazel_skylib", version = "1.4.2")
