@@ -127,7 +127,7 @@ def _shtk_dist_toolchain_impl(repository_ctx):
         },
     )
 
-_shtk_dist_toolchain = repository_rule(
+shtk_dist_toolchain = repository_rule(
     implementation = _shtk_dist_toolchain_impl,
     attrs = {
         "version": attr.string(),
@@ -147,5 +147,5 @@ def shtk_dist():
     bazel-bin directory because they will not work correctly.
     """
     repository = "shtk_dist_" + versions.canonicalize(SHTK_VERSION)
-    _shtk_dist_toolchain(name = repository, version = SHTK_VERSION, sha256 = SHTK_SHA256)
+    shtk_dist_toolchain(name = repository, version = SHTK_VERSION, sha256 = SHTK_SHA256)
     native.register_toolchains("@{}//:toolchain".format(repository))
