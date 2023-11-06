@@ -39,7 +39,4 @@ local_path_override(
 
 dist = use_extension("@rules_shtk//extensions:dist.bzl", "dist")
 
-dist.install(
-    version = "1.7",  # DO NOT MERGE: Make this optional.
-    sha256 = "9386b7dbf1a28361eaf56dd1712385abdbdf3a02f03e17ccbf5579bf22695e27",  # DO NOT MERGE: Make this optional.
-)
+dist.install()

@@ -97,13 +97,13 @@ def shtk_system(min_version = SHTK_VERSION):
     native.register_toolchains("@shtk_autoconf//:toolchain")
 
 def _shtk_dist_toolchain_impl(repository_ctx):
-    version = repository_ctx.attr.version
+    version = repository_ctx.attr.version or SHTK_VERSION
     url = "https://github.com/jmmv/shtk/releases/download/shtk-{}/shtk-{}.tar.gz".format(version, version)
 
     repository_ctx.download_and_extract(
         url,
         "shtk.tar.gz",
-        sha256 = repository_ctx.attr.sha256,
+        sha256 = repository_ctx.attr.sha256 if repository_ctx.attr.version else SHTK_SHA256
     )
 
     result = repository_ctx.execute(
@@ -146,6 +146,6 @@ def shtk_dist():
     Therefore, you should not copy scripts built with this toolchain out of the
     bazel-bin directory because they will not work correctly.
     """
-    repository = "shtk_dist_" + versions.canonicalize(SHTK_VERSION)
-    shtk_dist_toolchain(name = repository, version = SHTK_VERSION, sha256 = SHTK_SHA256)
+    repository = "shtk_dist_default"
+    shtk_dist_toolchain(name = repository)
     native.register_toolchains("@{}//:toolchain".format(repository))
